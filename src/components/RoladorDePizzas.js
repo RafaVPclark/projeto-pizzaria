@@ -1,12 +1,24 @@
 "use client"; // Necessário se estiver usando App Router no Next.js 13+
-
-import { useState } from "react";
+import { useCarrinho } from "@/context/CarrinhoContext";
+import { useEffect, useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 
 import styles from "../styles/RoladorDePizzas.module.css";
 
 export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
+  const { adicionarAoCarrinho } = useCarrinho();
+
+  const handleClick = (pizza) => {
+    console.log(pizza.preco);
+    adicionarAoCarrinho({
+      id: pizza.id,
+      nome: pizza.nome,
+      preco: pizza.preco,
+      tamanho: pizza.tamanho,
+      quantidade: 1,
+    });
+  };
   const pizzas = [
     {
       id: 1,
@@ -53,11 +65,14 @@ export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
   };
 
   const getPreco = (pizza, tamanho) => {
+    if (!pizza || !tamanho) return 0;
+
     switch (tamanho) {
       case "P":
         return pizza.precoP;
       case "G":
         return pizza.precoG;
+      case "M":
       default:
         return pizza.precoM;
     }
@@ -125,6 +140,18 @@ export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
                         Ver detalhess
                       </a>
                     </Link>
+                    <button
+                      className={`btn ${styles.btn_custom_cart}`}
+                      onClick={() =>
+                        handleClick({
+                          ...pizza,
+                          tamanho,
+                          preco: getPreco(pizza, tamanho), // adiciona a propriedade preco
+                        })
+                      }
+                    >
+                      <i className="bi bi-cart-plus-fill"></i>
+                    </button>
                   </div>
                 </div>
               </Col>

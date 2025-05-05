@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 import IntersecaoTitulo from "@/components/IntersecaoTitulo";
 import RoladorDeBebidas from "@/components/RoladorDeBebidas";
 import useFadeInObserver from "@/hooks/UseFadeInObserver";
-
+import IndicadorCarrinho from "@/components/IndicadorCarrinho";
 export default function PopularFoodPage() {
   useFadeInObserver();
   return (
@@ -22,6 +22,7 @@ export default function PopularFoodPage() {
         background_url={"/bebidas.jpg"}
       />
       <RoladorDeBebidas></RoladorDeBebidas>
+      <IndicadorCarrinho></IndicadorCarrinho>
     </Container>
   );
 }

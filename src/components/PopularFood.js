@@ -1,5 +1,6 @@
 import { Container, Row, Col } from "reactstrap";
 import styles from "../styles/PopularFood.module.css";
+// import IndicadorCarrinho from "@/components/IndicadorCarrinho";
 import Link from "next/link";
 export default function PopularFood(params) {
   return (

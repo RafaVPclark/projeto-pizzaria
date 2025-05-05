@@ -41,11 +41,6 @@ export default function Feedback() {
                 </p>
               </Col>
             </Row>
-            <Row className="mt-3 fade-in">
-              <Col>
-                <a className={`btn ${styles.btn_custom} fade-in`}>Veja mais</a>
-              </Col>
-            </Row>
           </Col>
           <Col xs="8" md="6" className="mx-auto mt-3 fade-in">
             <img

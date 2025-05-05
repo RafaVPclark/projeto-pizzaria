@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import styles from "../styles/RoladorDeBebidas.module.css";
-
+import Link from "next/link";
 export default function RoladorDeBebidas() {
   const bebidas = [
     {
@@ -35,7 +35,7 @@ export default function RoladorDeBebidas() {
             <Col
               key={bebida.id}
               md="3"
-              className={`mx-auto mb-4 mt-5 pt-5 fade-in`}
+              className={`mx-auto mb-4 mt-5 pt-5  fade-in`}
             >
               <div
                 className={`card_custom ${styles.card_custom} text-center p-4 fade-in`}
@@ -50,7 +50,13 @@ export default function RoladorDeBebidas() {
                 <p>
                   <strong>R$ {bebida.preco.toFixed(2)}</strong>
                 </p>
-                <button className="btn fade-in">
+                <div>
+                  <Link href={`/bebidas/${bebida.id}`} legacyBehavior>
+                    <a className={`btn ${styles.btn_custom}`}>Ver mais</a>
+                  </Link>
+                </div>
+
+                <button className="btn">
                   <i className="bi bi-cart-plus-fill"></i>
                 </button>
               </div>
