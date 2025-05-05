@@ -1,0 +1,20 @@
+.titulo_logo{
+    color: red; /* Teste visual */
+    font-family: "Rubik Moonrocks", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.background{
+    background-color: #FFF0E9;
+}
+.special_offer{
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    min-height: 300px;
+}
+.btn_custom{
+    width: 150px;
+    border-radius: 20px;
+    background-color:#FF9160 ;
+}

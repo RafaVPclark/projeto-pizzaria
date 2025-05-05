@@ -1,0 +1,96 @@
+"use client";
+import { useParams } from "next/navigation";
+import { Container, Row, Col } from "reactstrap";
+import styles from "../../../styles/DetalhesProduto.module.css";
+import useFadeInObserver from "@/hooks/UseFadeInObserver";
+import Link from "next/link";
+import page from "../../popular-food/page";
+const pizzas = [
+  {
+    id: 1,
+    nome: "Margherita",
+    ingredientes: ["molho de tomate", "muçarela", "manjericão"],
+    imagem: "/sn-pizza.png",
+    precoP: 19.9,
+    precoM: 29.9,
+    precoG: 39.9,
+  },
+  {
+    id: 2,
+    nome: "Calabresa",
+    ingredientes: ["molho de tomate", "muçarela", "calabresa", "cebola"],
+    imagem: "/sn-pizza.png",
+    precoP: 24.9,
+    precoM: 34.9,
+    precoG: 44.9,
+  },
+  {
+    id: 3,
+    nome: "Quatro Queijos",
+    ingredientes: ["muçarela", "gorgonzola", "provolone", "parmesão"],
+    imagem: "/sn-pizza.png",
+    precoP: 29.9,
+    precoM: 39.9,
+    precoG: 49.9,
+  },
+];
+export default function PizzaDetalhePage() {
+  useFadeInObserver();
+  const { id } = useParams();
+  const pizza = pizzas.find((p) => p.id === parseInt(id));
+
+  if (!pizza) return <p>Pizza não encontrada.</p>;
+
+  return (
+    <section className={`${styles.detalhes}`}>
+      <Container fluid className="text-center p-0 fade-in">
+        <Row>
+          <Col md="6" className={`${styles.content}`}>
+            <Row>
+              <Col xs="8" className="text-start mx-auto fade-in">
+                <Link href={`../../popular-food/`} legacyBehavior>
+                  <a href="#" className={`${styles.link}`}>
+                    <i
+                      className={`bi bi-arrow-left-circle-fill mb-3 fade-in ${styles.icon}`}
+                    ></i>
+                  </a>
+                </Link>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h1 className={`${styles.h1} fade-in`}>{pizza.nome}</h1>
+                <img
+                  src={pizza.imagem}
+                  alt={pizza.nome}
+                  className={`${styles.img_custom} fade-in`}
+                ></img>
+                <p className="fade-in">
+                  <strong>Ingredientes: </strong>{" "}
+                  {pizza.ingredientes.join(", ")}
+                </p>
+                <p className="fade-in">
+                  <strong>Preço P:</strong> R$ {pizza.precoP.toFixed(2)}
+                </p>
+                <p className="fade-in">
+                  <strong>Preço M:</strong> R$ {pizza.precoM.toFixed(2)}
+                </p>
+                <p className="fade-in">
+                  <strong>Preço G:</strong> R$ {pizza.precoG.toFixed(2)}
+                </p>
+              </Col>
+            </Row>
+          </Col>
+          <Col md="6">
+            <img
+              src="../../../detalhesBackground.jpg"
+              className="img-fluid fade-in"
+            ></img>
+          </Col>
+        </Row>
+      </Container>
+    </section>
+
+    // </div>
+  );
+}

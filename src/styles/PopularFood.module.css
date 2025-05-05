@@ -1,0 +1,27 @@
+.popular_food{
+    background-color: #FEF6F4;
+    min-height: 300px;
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+.titulo_logo{
+    color: red; /* Teste visual */
+    font-family: "Rubik Moonrocks", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.card_custom{
+    width: 18rem;
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+}
+.img_custom{
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+}
+.btn_custom{
+    width: 150px;
+    border-radius: 20px;
+    background-color:#FF9160 ;
+}

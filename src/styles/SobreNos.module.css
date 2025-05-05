@@ -1,0 +1,12 @@
+.sobre_nos{
+    background-color:#FFF0E9 ;
+    min-height: 400px;
+    font-family: "League Spartan", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+.btn_custom{
+    width: 150px;
+    border-radius: 20px;
+    background-color:#FF9160 ;
+}
