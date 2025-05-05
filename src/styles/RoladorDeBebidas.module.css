@@ -7,3 +7,9 @@
    border-radius: 5px;
    background-color:#FF9160;
  }
+ .btn_custom_cart{
+    font-size: 1.2rem;
+    color: #0ecb1e;
+    border: 1px solid #0ecb1e; 
+    margin-top: 5px;
+  }

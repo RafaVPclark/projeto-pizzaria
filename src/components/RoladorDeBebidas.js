@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useCarrinho } from "@/context/CarrinhoContext";
 import { Container, Row, Col } from "reactstrap";
 import styles from "../styles/RoladorDeBebidas.module.css";
 import Link from "next/link";
 export default function RoladorDeBebidas() {
+  const { adicionarAoCarrinho } = useCarrinho();
   const bebidas = [
     {
       id: 1,
@@ -26,7 +28,16 @@ export default function RoladorDeBebidas() {
       preco: 7.5,
     },
   ];
-
+  const handleClick = (bebida) => {
+    console.log(bebida.preco);
+    adicionarAoCarrinho({
+      id: bebida.id,
+      nome: bebida.nome,
+      preco: bebida.preco,
+      quantidade: 1,
+    });
+  };
+  // console.log(bebida.preco);
   return (
     <section className={`${styles.bebidas} d-flex`}>
       <Container className="align-self-center">
@@ -56,7 +67,10 @@ export default function RoladorDeBebidas() {
                   </Link>
                 </div>
 
-                <button className="btn">
+                <button
+                  className={`btn ${styles.btn_custom_cart}`}
+                  onClick={() => handleClick(bebida)}
+                >
                   <i className="bi bi-cart-plus-fill"></i>
                 </button>
               </div>
