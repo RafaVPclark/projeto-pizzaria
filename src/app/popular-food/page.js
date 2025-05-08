@@ -6,10 +6,12 @@ import IntersecaoTitulo from "@/components/IntersecaoTitulo";
 import RoladorDeBebidas from "@/components/RoladorDeBebidas";
 import useFadeInObserver from "@/hooks/UseFadeInObserver";
 import IndicadorCarrinho from "@/components/IndicadorCarrinho";
+import MapaPizza from "@/components/MapaPizza";
 export default function PopularFoodPage() {
   useFadeInObserver();
   return (
     <Container fluid className="p-0">
+      <MapaPizza />
       <TodasAsPizzasTopo />
       <RoladorDePizzas titulo="Pizzas Clássicas" idsDasPizzas={[1, 2, 3]} />
       <IntersecaoTitulo

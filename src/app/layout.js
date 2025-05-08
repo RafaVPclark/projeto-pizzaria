@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import Head from "next/head";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CarrinhoProvider } from "@/context/CarrinhoContext";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-br">

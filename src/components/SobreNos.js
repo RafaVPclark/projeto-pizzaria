@@ -19,8 +19,6 @@ export default function SobreNos() {
               crocância e sabor incomparáveis. Na Stragni, não servimos apenas
               comida, servimos momentos de prazer e autenticidade.
             </p>
-
-            <a className={`btn ${styles.btn_custom} fade-in`}>Leia Mais</a>
           </Col>
         </Row>
       </Container>

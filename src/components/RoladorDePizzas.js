@@ -1,53 +1,23 @@
-"use client"; // Necessário se estiver usando App Router no Next.js 13+
+"use client";
 import { useCarrinho } from "@/context/CarrinhoContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
-
 import styles from "../styles/RoladorDePizzas.module.css";
-
+import { buscarDadosDaAPI } from "@/services/apiService";
+const dados = await buscarDadosDaAPI("pizzas");
+console.log(dados);
+const pizzas = dados.map((pizza) => ({
+  id: pizza.id,
+  nome: pizza.nome,
+  ingredientes: pizza.ingredientes,
+  imagem: "/sn-pizza.png", // Se todas tiverem a mesma imagem por enquanto
+  precoP: parseFloat(pizza.precop),
+  precoM: parseFloat(pizza.precom),
+  precoG: parseFloat(pizza.precog),
+}));
 export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
   const { adicionarAoCarrinho } = useCarrinho();
-
-  const handleClick = (pizza) => {
-    console.log(pizza.preco);
-    adicionarAoCarrinho({
-      id: pizza.id,
-      nome: pizza.nome,
-      preco: pizza.preco,
-      tamanho: pizza.tamanho,
-      quantidade: 1,
-    });
-  };
-  const pizzas = [
-    {
-      id: 1,
-      nome: "Margherita",
-      ingredientes: ["molho de tomate", "muçarela", "manjericão"],
-      imagem: "/sn-pizza.png",
-      precoP: 19.9,
-      precoM: 29.9,
-      precoG: 39.9,
-    },
-    {
-      id: 2,
-      nome: "Calabresa",
-      ingredientes: ["molho de tomate", "muçarela", "calabresa", "cebola"],
-      imagem: "/sn-pizza.png",
-      precoP: 24.9,
-      precoM: 34.9,
-      precoG: 44.9,
-    },
-    {
-      id: 3,
-      nome: "Quatro Queijos",
-      ingredientes: ["muçarela", "gorgonzola", "provolone", "parmesão"],
-      imagem: "/sn-pizza.png",
-      precoP: 29.9,
-      precoM: 39.9,
-      precoG: 49.9,
-    },
-  ];
 
   const pizzasFiltradas = pizzas.filter((pizza) =>
     idsDasPizzas.includes(pizza.id)
@@ -69,53 +39,59 @@ export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
 
     switch (tamanho) {
       case "P":
-        return pizza.precoP;
+        return pizza.precoP ?? 0;
       case "G":
-        return pizza.precoG;
+        return pizza.precoG ?? 0;
       case "M":
       default:
-        return pizza.precoM;
+        return pizza.precoM ?? 0;
     }
+  };
+
+  const handleClick = (pizza) => {
+    const tamanho = tamanhosSelecionados[pizza.id];
+    const preco = getPreco(pizza, tamanho);
+
+    adicionarAoCarrinho({
+      id: pizza.id,
+      nome: pizza.nome,
+      preco: preco,
+      tamanho: tamanho,
+      quantidade: 1,
+    });
   };
 
   return (
     <section className={styles.rolador}>
       <Container>
-        <h2 className="text-center pt-5 mb-5 fade-in">{titulo}</h2>
+        <h2 className="text-center pt-5 mb-5">{titulo}</h2>
         <Row>
           {pizzasFiltradas.map((pizza) => {
             const tamanho = tamanhosSelecionados[pizza.id];
             const preco = getPreco(pizza, tamanho);
 
             return (
-              <Col
-                key={pizza.id}
-                md="6"
-                lg="4"
-                className="mb-4 mx-auto fade-in"
-              >
-                <div className={`card ${styles.card_custom} mx-auto fade-in`}>
+              <Col key={pizza.id} md="6" lg="4" className="mb-4 mx-auto">
+                <div className={`card ${styles.card_custom} mx-auto`}>
                   <Link href={`/pizza/${pizza.id}`} legacyBehavior>
                     <a style={{ textDecoration: "none", color: "inherit" }}>
                       <img
                         src={pizza.imagem}
-                        className="card-img-top fade-in"
+                        className="card-img-top"
                         alt={pizza.nome}
                       />
                     </a>
                   </Link>
 
                   <div className="card-body text-center">
-                    <h4 className="card-title fade-in">{pizza.nome}</h4>
-                    <p className="card-text fade-in">
-                      {pizza.ingredientes.join(", ")}
-                    </p>
+                    <h4 className="card-title">{pizza.nome}</h4>
+                    <p className="card-text">{pizza.ingredientes.join(", ")}</p>
 
                     <div className="mb-3">
                       {["P", "M", "G"].map((t) => (
                         <button
                           key={t}
-                          className={`btn ${styles.btn_custom} me-2  ${
+                          className={`btn ${styles.btn_custom} me-2 ${
                             tamanho === t
                               ? "btn-primary"
                               : "btn-outline-secondary"
@@ -132,25 +108,24 @@ export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
                       <strong>Tamanho selecionado:</strong> {tamanho}
                     </p>
                     <p>
-                      <strong>Preço:</strong> R$ {preco.toFixed(2)}
+                      <strong>Preço:</strong> R${" "}
+                      {typeof preco === "number" ? preco.toFixed(2) : "N/A"}
                     </p>
-
-                    <Link href={`/pizza/${pizza.id}`} legacyBehavior>
-                      <a className={`${styles.btn_custom2} btn fade-in"`}>
-                        Ver detalhess
-                      </a>
-                    </Link>
+                    <div className="mb-4">
+                      <Link href={`/pizza/${pizza.id}`} legacyBehavior>
+                        <a
+                          className={`btn ${styles.btn_custom2}`}
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          Veja mais
+                        </a>
+                      </Link>
+                    </div>
                     <button
-                      className={`btn ${styles.btn_custom_cart}`}
-                      onClick={() =>
-                        handleClick({
-                          ...pizza,
-                          tamanho,
-                          preco: getPreco(pizza, tamanho), // adiciona a propriedade preco
-                        })
-                      }
+                      className="btn btn-success"
+                      onClick={() => handleClick(pizza)}
                     >
-                      <i className="bi bi-cart-plus-fill"></i>
+                      Adicionar ao Carrinho
                     </button>
                   </div>
                 </div>

@@ -3,33 +3,18 @@ import { useCarrinho } from "@/context/CarrinhoContext";
 import { Container, Row, Col } from "reactstrap";
 import styles from "../styles/RoladorDeBebidas.module.css";
 import Link from "next/link";
+import { buscarDadosDaAPI } from "@/services/apiService";
+const dados = await buscarDadosDaAPI("bebidas");
+const bebidas = dados.map((bebidas) => ({
+  id: bebidas.id,
+  nome: bebidas.nome,
+  descricao: bebidas.descricao,
+  imagem: "agua1.png",
+  preco: bebidas.preco,
+}));
 export default function RoladorDeBebidas() {
   const { adicionarAoCarrinho } = useCarrinho();
-  const bebidas = [
-    {
-      id: 1,
-      nome: "Água Mineral",
-      descricao: "Água sem gás, 500ml",
-      imagem: "/agua1.png",
-      preco: 4.5,
-    },
-    {
-      id: 2,
-      nome: "Refrigerante",
-      descricao: "Lata 350ml - vários sabores",
-      imagem: "/agua1.png",
-      preco: 6.0,
-    },
-    {
-      id: 3,
-      nome: "Suco Natural",
-      descricao: "Suco de laranja natural 300ml",
-      imagem: "/agua1.png",
-      preco: 7.5,
-    },
-  ];
   const handleClick = (bebida) => {
-    console.log(bebida.preco);
     adicionarAoCarrinho({
       id: bebida.id,
       nome: bebida.nome,
@@ -37,7 +22,6 @@ export default function RoladorDeBebidas() {
       quantidade: 1,
     });
   };
-  // console.log(bebida.preco);
   return (
     <section className={`${styles.bebidas} d-flex`}>
       <Container className="align-self-center">
@@ -59,7 +43,7 @@ export default function RoladorDeBebidas() {
                 <h4>{bebida.nome}</h4>
                 <p>{bebida.descricao}</p>
                 <p>
-                  <strong>R$ {bebida.preco.toFixed(2)}</strong>
+                  <strong>R$ {bebida.preco}</strong>
                 </p>
                 <div>
                   <Link href={`/bebidas/${bebida.id}`} legacyBehavior>

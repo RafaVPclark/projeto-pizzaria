@@ -4,30 +4,16 @@ import { Container, Row, Col } from "reactstrap";
 import Link from "next/link";
 import styles from "../../../styles/DetalhesProduto.module.css";
 import useFadeInObserver from "@/hooks/UseFadeInObserver";
+import { buscarDadosDaAPI } from "@/services/apiService";
 
-const bebidas = [
-  {
-    id: 1,
-    nome: "Água Mineral",
-    descricao: "Água sem gás, 500ml",
-    imagem: "/agua1.png",
-    preco: 4.5,
-  },
-  {
-    id: 2,
-    nome: "Refrigerante",
-    descricao: "Lata 350ml - vários sabores",
-    imagem: "/agua1.png",
-    preco: 6.0,
-  },
-  {
-    id: 3,
-    nome: "Suco Natural",
-    descricao: "Suco de laranja natural 300ml",
-    imagem: "/agua1.png",
-    preco: 7.5,
-  },
-];
+const dados = await buscarDadosDaAPI("bebidas");
+const bebidas = dados.map((bebidas) => ({
+  id: bebidas.id,
+  nome: bebidas.nome,
+  descricao: bebidas.descricao,
+  imagem: "../agua1.png",
+  preco: bebidas.preco,
+}));
 
 export default function BebidaDetalhePage() {
   useFadeInObserver();
@@ -58,7 +44,7 @@ export default function BebidaDetalhePage() {
               <strong>Descrição:</strong> {bebida.descricao}
             </p>
             <p>
-              <strong>Preço:</strong> R$ {bebida.preco.toFixed(2)}
+              <strong>Preço:</strong> R$ {bebida.preco}
             </p>
           </Col>
           <Col md="6">

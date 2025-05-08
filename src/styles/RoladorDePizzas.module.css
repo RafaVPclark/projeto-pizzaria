@@ -14,14 +14,43 @@
     background-color:#FF9160;
 }
 .btn_custom2{
-   width: 200px;
-  /* height: 50px; */ 
+  width: 200px;
   border-radius: 5px;
   background-color:#FF9160;
+}
+.btn_custom2:hover{
+  background-color: #FEF6F4 !important;
+  border: 2px solid #FF9160 !important;
+  color: #FF9160 !important;
 }
 .btn_custom_cart{
   font-size: 1.2rem;
   color: #0ecb1e;
   border: 1px solid #0ecb1e; 
   margin-top: 5px;
+}
+
+.btn_custom{
+  width: 50px;
+  border-radius: 50px;
+  background-color:#FF9160 !important;
+  color: #FEF6F4 !important;
+  border: 2px solid #FF9160 !important;
+}
+.btn_custom:hover{
+  background-color: #FEF6F4 !important;
+  border: 2px solid #FF9160 !important;
+  color: #FF9160 !important;
+}
+.btn_custom2{
+  width: 100px;
+  border-radius: 50px;
+  background-color:#FF9160 !important;
+  color: #FEF6F4 !important;
+  border: 2px solid #FF9160 !important;
+}
+.btn_custom2:hover{
+  background-color: #FEF6F4 !important;
+  border: 2px solid #FF9160 !important;
+  color: #FF9160 !important;
 }

@@ -5,35 +5,18 @@ import styles from "../../../styles/DetalhesProduto.module.css";
 import useFadeInObserver from "@/hooks/UseFadeInObserver";
 import Link from "next/link";
 import page from "../../popular-food/page";
-const pizzas = [
-  {
-    id: 1,
-    nome: "Margherita",
-    ingredientes: ["molho de tomate", "muçarela", "manjericão"],
-    imagem: "/sn-pizza.png",
-    precoP: 19.9,
-    precoM: 29.9,
-    precoG: 39.9,
-  },
-  {
-    id: 2,
-    nome: "Calabresa",
-    ingredientes: ["molho de tomate", "muçarela", "calabresa", "cebola"],
-    imagem: "/sn-pizza.png",
-    precoP: 24.9,
-    precoM: 34.9,
-    precoG: 44.9,
-  },
-  {
-    id: 3,
-    nome: "Quatro Queijos",
-    ingredientes: ["muçarela", "gorgonzola", "provolone", "parmesão"],
-    imagem: "/sn-pizza.png",
-    precoP: 29.9,
-    precoM: 39.9,
-    precoG: 49.9,
-  },
-];
+import { buscarDadosDaAPI } from "@/services/apiService";
+const dados = await buscarDadosDaAPI("pizzas");
+console.log(dados);
+const pizzas = dados.map((pizza) => ({
+  id: pizza.id,
+  nome: pizza.nome,
+  ingredientes: pizza.ingredientes,
+  imagem: "/sn-pizza.png", // Se todas tiverem a mesma imagem por enquanto
+  precoP: parseFloat(pizza.precop),
+  precoM: parseFloat(pizza.precom),
+  precoG: parseFloat(pizza.precog),
+}));
 export default function PizzaDetalhePage() {
   useFadeInObserver();
   const { id } = useParams();

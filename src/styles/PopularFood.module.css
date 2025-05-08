@@ -23,5 +23,12 @@
 .btn_custom{
     width: 150px;
     border-radius: 20px;
-    background-color:#FF9160 ;
+    background-color:#FF9160 !important;
+    color: #FEF6F4 !important;
+    border: 2px solid #FF9160 !important;
+}
+.btn_custom:hover{
+    background-color: #FEF6F4 !important;
+    border: 2px solid #FF9160 !important;
+    color: #FF9160 !important;
 }
