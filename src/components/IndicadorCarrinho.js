@@ -1,10 +1,12 @@
 "use client";
 import { useCarrinho } from "@/context/CarrinhoContext";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function IndicadorCarrinho() {
-  const { carrinho } = useCarrinho();
+  const { carrinho, removerDoCarrinho } = useCarrinho();
   const [mostrarResumo, setMostrarResumo] = useState(false);
+  const router = useRouter();
 
   const total = carrinho.reduce(
     (acc, item) => acc + item.preco * item.quantidade,
@@ -28,7 +30,8 @@ export default function IndicadorCarrinho() {
         }}
         onClick={() => setMostrarResumo(!mostrarResumo)}
       >
-        🛒 {carrinho.length} item(s) - R$ {total.toFixed(2)}
+        <i className="bi bi-cart me-3"></i> {carrinho.length} item(s) - R${" "}
+        {total}
       </div>
 
       {mostrarResumo && (
@@ -49,13 +52,49 @@ export default function IndicadorCarrinho() {
           <h5>Carrinho</h5>
           <ul style={{ listStyle: "none", paddingLeft: 0 }}>
             {carrinho.map((item, i) => (
-              <li key={i}>
-                {item.nome} ({item.tamanho}) - R$ {item.preco.toFixed(2)}
+              <li key={i} style={{ marginBottom: "10px" }}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <span>
+                    {item.nome} ({item.tamanho}) - R$ {item.preco}
+                  </span>
+                  <button
+                    onClick={() => removerDoCarrinho(i)}
+                    style={{
+                      marginLeft: "10px",
+                      background: "red",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      padding: "2px 6px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
           <hr />
-          <strong>Total: R$ {total.toFixed(2)}</strong>
+          <strong>Total: R$ {total}</strong>
+          <br />
+          <button
+            onClick={() => router.push("../pagamento")}
+            style={{
+              marginTop: "10px",
+              backgroundColor: "#0070f3",
+              color: "#fff",
+              padding: "10px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              width: "100%",
+            }}
+          >
+            Finalizar Pedido
+          </button>
         </div>
       )}
     </>

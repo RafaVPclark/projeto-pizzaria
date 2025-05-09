@@ -3,7 +3,7 @@ import styles from "../styles/PopularFood.module.css";
 import { buscarDadosDaAPI } from "@/services/apiService";
 import Link from "next/link";
 
-const dados = await buscarDadosDaAPI();
+const dados = await buscarDadosDaAPI("pizzas");
 
 export default function PopularFood() {
   return (

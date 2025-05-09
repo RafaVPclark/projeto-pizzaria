@@ -109,9 +109,9 @@ export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
                     </p>
                     <p>
                       <strong>Preço:</strong> R${" "}
-                      {typeof preco === "number" ? preco.toFixed(2) : "N/A"}
+                      {typeof preco === "number" ? preco : "N/A"}
                     </p>
-                    <div className="mb-4">
+                    <div className="mb-1">
                       <Link href={`/pizza/${pizza.id}`} legacyBehavior>
                         <a
                           className={`btn ${styles.btn_custom2}`}
@@ -122,10 +122,10 @@ export default function RoladorDePizzas({ titulo, idsDasPizzas }) {
                       </Link>
                     </div>
                     <button
-                      className="btn btn-success"
+                      className={`btn ${styles.btn_custom_cart}`}
                       onClick={() => handleClick(pizza)}
                     >
-                      Adicionar ao Carrinho
+                      <i className="bi bi-cart-plus-fill"></i>
                     </button>
                   </div>
                 </div>

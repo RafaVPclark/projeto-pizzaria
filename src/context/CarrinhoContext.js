@@ -10,11 +10,20 @@ export function CarrinhoProvider({ children }) {
     setCarrinho((prev) => [...prev, produto]);
   };
 
+  const removerDoCarrinho = (index) => {
+    setCarrinho((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const limparCarrinho = () => setCarrinho([]);
 
   return (
     <CarrinhoContext.Provider
-      value={{ carrinho, adicionarAoCarrinho, limparCarrinho }}
+      value={{
+        carrinho,
+        adicionarAoCarrinho,
+        removerDoCarrinho,
+        limparCarrinho,
+      }}
     >
       {children}
     </CarrinhoContext.Provider>

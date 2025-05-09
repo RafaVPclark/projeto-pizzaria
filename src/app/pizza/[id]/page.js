@@ -53,13 +53,13 @@ export default function PizzaDetalhePage() {
                   {pizza.ingredientes.join(", ")}
                 </p>
                 <p className="fade-in">
-                  <strong>Preço P:</strong> R$ {pizza.precoP.toFixed(2)}
+                  <strong>Preço P:</strong> R$ {pizza.precoP}
                 </p>
                 <p className="fade-in">
-                  <strong>Preço M:</strong> R$ {pizza.precoM.toFixed(2)}
+                  <strong>Preço M:</strong> R$ {pizza.precoM}
                 </p>
                 <p className="fade-in">
-                  <strong>Preço G:</strong> R$ {pizza.precoG.toFixed(2)}
+                  <strong>Preço G:</strong> R$ {pizza.precoG}
                 </p>
               </Col>
             </Row>

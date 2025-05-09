@@ -73,13 +73,13 @@ export default function MapaPizza() {
         className="botao-abrir-mapa"
         onClick={() => setMostrarMapa((prev) => !prev)}
       >
-        📍 Ver no Mapa
+        <i className="bi bi-geo-alt-fill me-2"></i> Ver no Mapa
       </button>
 
       {mostrarMapa && (
         <div className="mapa-flutuante">
           <button className="fechar-mapa" onClick={() => setMostrarMapa(false)}>
-            ❌
+            <i className="bi bi-x-circle-fill"></i>
           </button>
 
           <input
