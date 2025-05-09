@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import {
   Container,
@@ -16,6 +17,7 @@ import styles from "./Pagamento.module.css";
 
 export default function Pagamento() {
   const router = useRouter();
+  const [numeroCartaoFormatado, setNumeroCartaoFormatado] = useState("");
 
   const { carrinho } = useCarrinho();
 
@@ -24,9 +26,77 @@ export default function Pagamento() {
     0
   );
 
+  const formatarNumeroCartao = (value) => {
+    // Remove tudo que não é número
+    const numeros = value.replace(/\D/g, "").slice(0, 16);
+  
+    // Adiciona espaço a cada 4 dígitos
+    const formatado = numeros.replace(/(\d{4})(?=\d)/g, "$1 ");
+    setNumeroCartaoFormatado(formatado);
+  };
+  
+
+  const validarCartao = () => {
+    const numeroCartao = document
+      .getElementById("numeroCartao")
+      .value.replace(/\s/g, "");
+    const cvv = document.getElementById("codigoSeguranca").value;
+    const validade = document.getElementById("validade").value;
+    const titular = document.getElementById("titular").value.trim();
+
+    // Luhn check
+    const luhnCheck = (num) => {
+      let sum = 0;
+      let shouldDouble = false;
+      for (let i = num.length - 1; i >= 0; i--) {
+        let digit = parseInt(num.charAt(i), 10);
+        if (shouldDouble) {
+          digit *= 2;
+          if (digit > 9) digit -= 9;
+        }
+        sum += digit;
+        shouldDouble = !shouldDouble;
+      }
+      return sum % 10 === 0;
+    };
+
+    if (!/^\d{16}$/.test(numeroCartao) || !luhnCheck(numeroCartao)) {
+      alert("Número do cartão inválido!");
+      return false;
+    }
+
+    if (!/^\d{3,4}$/.test(cvv)) {
+      alert("Código de segurança inválido!");
+      return false;
+    }
+
+    if (!/^\d{2}\/\d{2}$/.test(validade)) {
+      alert("Data de validade inválida!");
+      return false;
+    } else {
+      const [mes, ano] = validade.split("/").map(Number);
+      const agora = new Date();
+      const validadeDate = new Date(2000 + ano, mes - 1);
+      if (validadeDate < new Date(agora.getFullYear(), agora.getMonth())) {
+        alert("Cartão expirado!");
+        return false;
+      }
+    }
+
+    if (titular.length < 3) {
+      alert("Nome do titular inválido!");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Pagamento confirmado!");
+    if (validarCartao()) {
+      alert("Pagamento confirmado!");
+      // Aqui você pode redirecionar ou chamar a API
+    }
   };
 
   return (
@@ -75,11 +145,14 @@ export default function Pagamento() {
             <FormGroup>
               <Label for="numeroCartao">Número do Cartão</Label>
               <Input
-                type="text"
-                id="numeroCartao"
-                placeholder="1234 5678 9012 3456"
-                required
-              />
+              type="text"
+              id="numeroCartao"
+              placeholder="1234 5678 9012 3456"
+              value={numeroCartaoFormatado}
+              onChange={(e) => formatarNumeroCartao(e.target.value)}
+              required
+            />
+
             </FormGroup>
 
             <FormGroup>
